@@ -2,34 +2,36 @@
 
 class atestado
 {
+    private $conn_class = new conexao_banco();
+    private $conn = $this->conn_class->conectar();
+
     public $id;
     public $fk;
     public $cid;
     public $data;
     public $qtd_dias;
-    private $conexao = new conexao_banco();
-    private $stm = $this->conexao->conectar();
+
     function getAll()
     {
-        $this->stm->prepare("select * from atestado");
-        $this->stm->execute();
-        return $this->stm->fetchAll(PDO::FETCH_OBJ);;
+        $stm = $this->conn->prepare("select * from atestado");
+        $stm->execute();
+        return $stm->fetchAll(PDO::FETCH_OBJ);;
     }
     function get()
     {
-        $this->stm->prepare("select id_atestado,cid,data,qtd_dias from relatorio_funcionario r LEFT JOIN atestado ats on r.fk_atestado = ats.id_atestado where r.fk_funcionario = :id");
-        $this->stm->bindParam("id", $this->id);
-        $this->stm->execute();
-        return $this->stm->fetchAll(PDO::FETCH_OBJ);;
+        $stm = $this->conn->prepare("select id_atestado,cid,data,qtd_dias from relatorio_funcionario r LEFT JOIN atestado ats on r.fk_atestado = ats.id_atestado where r.fk_funcionario = :id");
+        $stm->bindParam("id", $this->id);
+        $stm->execute();
+        return $stm->fetchAll(PDO::FETCH_OBJ);;
     }
-    function insert($dados)
+    function insert()
     {
-        $this->stm->prepare("Insert into atestado values (DEFAULT,:fk,:cid,:data,:qtd_dias)");
-        $this->stm->bindParam("fk", $this->fk);
-        $this->stm->bindParam("cid", $this->cid);
-        $this->stm->bindParam("data", $this->data);
-        $this->stm->bindParam("qtd_dias", $this->qtd_dias);
-        $this->stm->execute();
+        $stm = $this->conn->prepare("Insert into atestado values (DEFAULT,:fk,:cid,:data,:qtd_dias)");
+        $stm->bindParam("fk", $this->fk);
+        $stm->bindParam("cid", $this->cid);
+        $stm->bindParam("data", $this->data);
+        $stm->bindParam("qtd_dias", $this->qtd_dias);
+        return $stm->execute();
     }
     function update($column, $data, $id)
     {
@@ -39,7 +41,7 @@ class atestado
         $stm->bindParam("column", $column);
         $stm->bindParam("data", $data);
         $stm->bindParam("id", $id);
-        $stm->execute();
+        return $stm->execute();
     }
     function delete()
     {
