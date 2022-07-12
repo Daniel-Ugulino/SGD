@@ -9,7 +9,6 @@ class atestado
     public $qtd_dias;
     private $conexao = new conexao_banco();
     private $stm = $this->conexao->conectar();
-
     function getAll()
     {
         $this->stm->prepare("select * from atestado");
