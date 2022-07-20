@@ -4,6 +4,14 @@ class funcionario
 {
     private $conexao = new conexao_banco();
 
+    public $id_funcionario;
+    public $nome;
+    public $matricula;
+    public $cpf;
+    public $telefone;
+    public $email;
+    public $setor;
+
     function getAll()
     {
         $this->conexao->conectar();
