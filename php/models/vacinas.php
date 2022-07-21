@@ -1,46 +1,50 @@
 <?php
 class vacinas
 {
-    private $conexao = new conexao_banco();
+    private $conexao;
+    private $conn;
+    
+    public $id;
+    public $fk;
+    public $tipo;
+    public $dose;
+
+    function __construct()
+    {
+        $this->conexao = new conexao_banco();
+        $this->conn = $this->conexao->conectar();
+    }
+
     function getAll()
     {
-        $conexao = new conexao_banco();
-        $conexao->conectar();
-        $stm = $conexao->conectar()->prepare("select * from vacinas");
+        $stm = $this->conn->prepare("select * from vacinas");
         $stm->execute();
-        $dados = $stm->fetchAll(PDO::FETCH_OBJ);
-        return $dados;
+        return $stm->fetchAll(PDO::FETCH_OBJ);;
     }
-    function get($id)
+    function getById()
     {
-        $conexao = new conexao_banco();
-        $conexao->conectar();
-        $stm = $conexao->conectar()->prepare("select id_vacinas,tipo,dose,data from relatorio_funcionario r LEFT JOIN vacinas vac on r.fk_vacina = vac.id_vacinas where r.fk_funcionario = :id");
-        $stm->bindParam("id", $id);
+        $stm = $this->conn->prepare("select id_vacinas,tipo,dose,data from relatorio_funcionario r LEFT JOIN vacinas vac on r.fk_vacina = vac.id_vacinas where r.fk_funcionario = :id");
+        $stm->bindParam("id", $this->id);
         $stm->execute();
-        $dados = $stm->fetchAll(PDO::FETCH_OBJ);
-        return $dados;
+        return $stm->fetchAll(PDO::FETCH_OBJ);;
     }
-    function insert($data)
+    function insert()
     {
-        $conexao = new conexao_banco();
-        $conexao->conectar();
-        $stm = $conexao->conectar()->prepare("Insert into vacinas values(DEFAULT,:fk,:tipo,:dose,now();");
-        $stm->bindParam("fk", $data->fk_funcionario);
-        $stm->bindParam("tipo", $data->tipo);
-        $stm->bindParam("dose", $data->dose);
-        $stm->execute();
+        $stm = $this->conn->prepare("Insert into vacinas values(DEFAULT,:fk,:tipo,:dose,now();");
+        $stm->bindParam("fk", $this->fk);
+        $stm->bindParam("tipo", $this->tipo);
+        $stm->bindParam("dose", $this->dose);
+        return $stm->execute();
     }
-    function update($column, $data, $id)
+    function update($column, $data)
     {
-        $conexao = new conexao_banco();
-        $conexao->conectar();
-        $stm = $conexao->conectar()->prepare("Update vacinas set :column = (:data) where id_vacinas = (:id)");
+        $stm = $this->conn->prepare("Update vacinas set :column = (:data) where id_vacinas = (:id)");
         $stm->bindParam("column", $column);
         $stm->bindParam("data", $data);
-        $stm->bindParam("id", $id);
-        $stm->execute();
+        $stm->bindParam("id", $this->id);
+        return $stm->execute();
     }
+
     function delete()
     {
     }

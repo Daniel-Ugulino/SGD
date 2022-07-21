@@ -4,9 +4,9 @@ include "../conexao.php";
 
 class atestado
 {
-    private $conn_class;
+    private $conexao;
     private $conn;
-
+    
     public $id;
     public $fk;
     public $cid;
@@ -15,8 +15,8 @@ class atestado
 
     function __construct()
     {
-        $this->conn_class = new conexao_banco();
-        $this->conn = $this->conn_class->conectar();
+        $this->conexao = new conexao_banco();
+        $this->conn = $this->conexao->conectar();
     }
 
     function getAll()

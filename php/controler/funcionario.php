@@ -1,7 +1,7 @@
 <?php
-require "../models/funcionario.php";
-require "../models/vacinas.php";
-require "../models/exame.php";
+// require "../models/funcionario.php";
+// require "../models/vacinas.php";
+// require "../models/exame.php";
 require_once "../models/atestados.php";
 
 class funcionario_controler

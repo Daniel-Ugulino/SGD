@@ -3,7 +3,7 @@ class User{
 
     function getAll(){}
 
-    function get(){}
+    function getById(){}
 
     function insert(){}
 
