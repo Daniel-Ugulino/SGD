@@ -12,14 +12,14 @@ class funcionario_controler
     private $funcionario;
     private $id;
 
-    function __construct()
+    private function __construct()
     {
         $this->atestado = new atestado();
         // $this->exame = new exame();
         // $this->vacinas = new vacinas();
     }
 
-    function getReport($id)
+    public function getReport($id)
     {
        $this->atestado->id = $id;
        return $this->atestado->getById();
@@ -31,7 +31,7 @@ class funcionario_controler
         # code...
     }     
 
-    function cad_funcionario()
+    public function cad_funcionario()
     {
         $data = $_POST;
         $data1 = json_encode($data);

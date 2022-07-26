@@ -13,28 +13,27 @@ class Exame
     public $resultado;
 
 
-    function __construct()
+    private function __construct()
     {
         $this->conexao = new conexao_banco();
         $this->conn = $this->conexao->conectar();
     }
 
-    function get()
+    public function get()
     {
         $stm = $this->conn->prepare("select * from exame_periodico where ativo = true");
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_OBJ);
     }
-    function getById($id)
+    public function getById()
     {
 
         $stm = $this->conn->prepare("select id_exame,exame,laboratorio,data_exame,resultado from relatorio_funcionario r LEFT JOIN exame_periodico exa on r.fk_exame = exa.id_exame where r.fk_funcionario = :id");
-        $stm->bindParam("id", $id);
+        $stm->bindParam("id", $this->id);
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_OBJ);;
     }
-
-    function insert()
+    public function insert()
     {
         $this->conexao->conectar();
         $stm = $this->conexao->conectar()->prepare("Insert into exame_periodico values(DEFAULT,:fk_key,:exame,:laboratorio,:data_exame,:resultado");
@@ -45,8 +44,7 @@ class Exame
         $stm->bindParam("resultado", $this->resultado);
         return $stm->execute();
     }
-    
-    function update($column, $data)
+    public function update($column, $data)
     {
         $this->conexao->conectar();
         $stm = $this->conexao->conectar()->prepare("Update exame_periodico set :column = (:data) where id_funcionario = (:id)");
@@ -55,8 +53,7 @@ class Exame
         $stm->bindParam("id", $this->id);
         $stm->execute();
     }
-
-    function delete()
+    public function delete()
     {
         $this->conexao->conectar();
         $stm = $this->conexao->conectar()->prepare("Update exame_periodico set ativo = false where id_funcionario = (:id)");
