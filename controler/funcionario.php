@@ -2,7 +2,12 @@
 // require "../models/funcionario.php";
 // require "../models/vacinas.php";
 // require "../models/exame.php";
-require_once "../models/atestados.php";
+// require "../models/atestados.php";
+
+class report_controller
+{
+}
+
 
 class funcionario_controler
 {
@@ -21,21 +26,21 @@ class funcionario_controler
 
     public function getReport($id)
     {
-       $this->atestado->id = $id;
-       return $this->atestado->getById();
+        $this->atestado->id = $id;
+        return $this->atestado->getById();
     }
 
 
     public function cad_vacinas()
     {
         # code...
-    }     
+    }
 
     public function cad_funcionario()
     {
         $data = $_POST;
         $data1 = json_encode($data);
-        
+
         $this->atestado->fk = "x";
         $this->atestado->cid = "x";
         $this->atestado->data = "x";
@@ -44,6 +49,21 @@ class funcionario_controler
     }
 }
 
-$sla = new funcionario_controler();
-$data = $sla->getReport(2);
-echo(json_encode($data[0]));  
+
+class atestado_controller
+{
+}
+
+class vacinas_controller
+{
+}
+
+
+class exame_controller
+{
+}
+
+
+// $sla = new funcionario_controler();
+// $data = $sla->getReport(2);
+// echo (json_encode($data[0]));

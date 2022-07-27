@@ -6,5 +6,5 @@ class Controler {
 
     }
 
-    function 
+     
 }
