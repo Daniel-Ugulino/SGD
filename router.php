@@ -9,8 +9,8 @@ class router
 {
     function get_url()
     {
-        $uri = parse_url($_SERVER['REQUEST_URI'],);
-        $url = strstr(implode($uri), "php");
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $url = strstr($uri, "med");
         $url2 = strpbrk($url, "/");
         echo ($url2);
         switch ($url2) {
