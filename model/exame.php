@@ -21,17 +21,16 @@ class Exame
 
     public function get()
     {
-        $stm = $this->conn->prepare("select * from exame_periodico where ativo = true");
+        $stm = $this->conn->prepare("select * from exame_periodico");
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_OBJ);
     }
     public function getById()
     {
-
         $stm = $this->conn->prepare("select id_exame,exame,laboratorio,data_exame,resultado from relatorio_funcionario r LEFT JOIN exame_periodico exa on r.fk_exame = exa.id_exame where r.fk_funcionario = :id");
         $stm->bindParam("id", $this->id);
         $stm->execute();
-        return $stm->fetchAll(PDO::FETCH_OBJ);;
+        return $stm->fetchAll(PDO::FETCH_OBJ);
     }
     public function insert()
     {
