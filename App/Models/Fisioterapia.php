@@ -1,5 +1,6 @@
 <?php
-require "..//conexao.php";
+
+require_once "../../Core/Conexao.php";
 
 class fisioterapia{
     

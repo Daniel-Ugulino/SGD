@@ -1,6 +1,9 @@
 <?php
-include "../conexao.php";
+
+require_once "../../Core/Conexao.php";
+
 class Perguntas{
+    
     public $conexao;
     public $conn;
 
@@ -27,7 +30,8 @@ class Perguntas{
     }
 
     public function insert(){
-        $stm = $this->conn->prepare("insert into pergunta values(DEFAULT,:id)");
+        $stm = $this->conn->prepare("insert into pergunta values(DEFAULT,:pergunta)");
+        $stm->bindParam("id", $this->pergunta);
         return $stm->execute();
     }
 
@@ -41,7 +45,4 @@ class Perguntas{
     }
 
 }
-
-
-
 ?>

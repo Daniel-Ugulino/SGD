@@ -1,5 +1,7 @@
 <?php
 
+require_once "../../Core/Conexao.php";
+
 class funcionario
 {
     private $conexao;

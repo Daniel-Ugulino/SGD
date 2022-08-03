@@ -1,4 +1,8 @@
 <?php
+
+require_once "../../Core/Conexao.php";
+
+
 class vacinas
 {
     private $conexao;
