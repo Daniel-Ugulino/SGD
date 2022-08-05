@@ -22,20 +22,20 @@ class funcionario
         $this->conn = $this->conexao->conectar();
     }
 
-    public function getAll()
+    private function getAll()
     {
         $stm = $this->conn->prepare("select * from funcionario where ativo = true");
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_OBJ);
     }
-    public function getById()
+    private function getById()
     {
         $stm = $this->conn->prepare("select * from funcionario where id_funcionario = :id and ativo = true");
         $stm->bindParam("id", $this->id);
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_OBJ);;
     }
-    public function insert()
+    private function insert()
     {
         $stm = $this->conn->prepare("Insert into funcionario values(DEFAULT,:name,:matricula,:cpf,:telefone,:email,:setor,now(),:fator_rh,true,now());");
         $stm->bindParam("name", $this->nome);
@@ -47,7 +47,7 @@ class funcionario
         $stm->bindParam("fator_rh", $this->fator_rh);
         return $stm->execute();
     }
-    public function update($column, $data)
+    private function update($column, $data)
     {
         $stm = $this->conn->prepare("Update funcionario set :column = (:data) where id_funcionario = (:id)");
         $stm->bindParam("column", $column);
@@ -55,7 +55,7 @@ class funcionario
         $stm->bindParam("id", $this->id);
         return $stm->execute();
     }
-    function delete()
+    private function delete()
     {
         $stm = $this->conn->prepare("Update funcionario set ativo = false where id_funcionario = (:id)");
         $stm->bindParam("id", $this->id);

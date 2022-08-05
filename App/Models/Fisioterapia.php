@@ -2,13 +2,15 @@
 
 require_once "../../Core/Conexao.php";
 
-class fisioterapia{
-    
+class fisioterapia
+{
+
     private $conexao;
     private $conn;
 
     public $id;
     public $queixa;
+    public $fk_funcionario;
     public $data_consulta;
 
     private function  __construct()
@@ -17,21 +19,33 @@ class fisioterapia{
         $this->conn = $this->conexao->conectar();
     }
 
-    public function getAll()
+    private function getAll()
     {
-        $stm = $this->conn->prepare("select * from consulta_fisio");
+        $stm = $this->conn->prepare("select * from fisioterapia");
         $stm->execute();
         $stm->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getById(){
-        $stm = $this->conn->prepare("
-        select f.id_consulta,q.fk_relatorio,pe.pergunta,q.resposta,q.obs,f.queixa,f.data_consulta from questionario q 
-        JOIN perguntas pe on q.fk_pergunta = pe.id_pergunta
-        JOIN consulta_fisio f on  q.fk_consulta = f.id_consulta WHERE q.fk_consulta is not null
-        ;");
+    private function getById()
+    {
+        $stm = $this->conn->prepare("select * from resposta_fisioterapia where fk_funcionario = :fk");
+        $stm->bindParam("fk", $this->fk_funcionario);
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_OBJ);
     }
-
+    private function insert()
+    {
+        $stm = $this->conn->prepare("inser into fisioterapia values('DEFAULT,:queixa,now(),:fk_funcionario')");
+        $stm->bindParam(":queixa", $this->queixa);
+        $stm->bindParam(":fk_funcionario", $this->fk_funcionario);
+        return $stm->execute();
+    }
+    private function update($column, $data)
+    {
+        $stm = $this->conn->prepare("Update fisioterapia set :column = (:data) where id_conuslta = (:id)");
+        $stm->bindParam("column", $column);
+        $stm->bindParam("data", $data);
+        $stm->bindParam("id", $this->id);
+        return $stm->execute();
+    }
 }
