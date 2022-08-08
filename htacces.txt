@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+
+DirectoryIndex default.php
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (*.*/pages)
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(*.*)$ $1.php
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(*.*)$ $1.html
+RewriteBase /
+RewriteRule ^index$ App/views/index.php
+RewriteRule ^teste& App/views/teste.php
+</IfModule>

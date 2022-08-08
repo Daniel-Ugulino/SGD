@@ -1,12 +1,18 @@
 <?php
 
-include "controler/funcionario.php";
-include "controler/relatorio.php";
-include "controler/user.php";
-include "controler/log.php";
+require_once "controler/funcionario.php";
+require_once "controler/relatorio.php";
+require_once "controler/user.php";
+require_once "controler/log.php";
 
 class router
 {
+    
+    public function __construct()
+    {
+        
+    }
+
     function get_url()
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
