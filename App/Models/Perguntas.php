@@ -2,8 +2,9 @@
 
 require_once "../../Core/Conexao.php";
 
-class Perguntas{
-    
+class Perguntas
+{
+
     public $conexao;
     public $conn;
 
@@ -16,33 +17,72 @@ class Perguntas{
         $this->conn = $this->conexao->conectar();
     }
 
-    private function getAll(){
-        $stm = $this->conn->prepare("select * from perguntas");
-        $stm->execute();
-        return $stm->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    private function getById(){
-        $stm = $this->conn->prepare("select * from perguntas where id_pergunta = :id");
-        $stm->bindParam("id", $this->id);
-        $stm->execute();
-        return $stm->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    private function insert(){
-        $stm = $this->conn->prepare("insert into pergunta values(DEFAULT,:pergunta)");
-        $stm->bindParam("id", $this->pergunta);
-        return $stm->execute();
-    }
-
-    private function update($column, $data)
+    public function getAll()
     {
+        try {
+            $stm = $this->conn->prepare("select * from perguntas");
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
+    }
+
+    public function getById()
+    {
+        try {
+            $stm = $this->conn->prepare("select * from perguntas where id_pergunta = :id");
+            $stm->bindParam("id", $this->id);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
+    }
+
+    public function insert()
+    {
+        try {
+            $stm = $this->conn->prepare("insert into pergunta values(DEFAULT,:pergunta)");
+            $stm->bindParam("id", $this->pergunta);
+            return $stm->execute();
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
+    }
+
+    public function update($column, $data)
+    {
+        try{
         $stm = $this->conn->prepare("update perguntas set :column = (:data) where id_pergunta = :id");
-        $stm->bindParam("column",$column);
+        $stm->bindParam("column", $column);
         $stm->bindParam("data", $data);
         $stm->bindParam("id", $this->id);
-        return $stm->execute();
+        return $stm->execute();}
+        catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
     }
 
+
+    public function search($column, $data)
+    {
+        try {
+            $stm = $this->conn->prepare("select * from perguntas where :column = :data");
+            $stm->bindParam("column", $column);
+            $stm->bindParam("data", $data);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
+    }
+
+    public function delete()
+    {
+        try {
+        } catch (Exception $e) {
+            echo ("Erro type: \n" . $e);
+        }
+    }
 }
-?>

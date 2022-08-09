@@ -19,36 +19,69 @@ class vacinas
         $this->conn = $this->conexao->conectar();
     }
 
-    private function getAll()
+    public function getAll()
     {
-        $stm = $this->conn->prepare("select * from vacinas");
-        $stm->execute();
-        return $stm->fetchAll(PDO::FETCH_OBJ);;
+        try {
+            $stm = $this->conn->prepare("select * from vacinas");
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
     }
-    private function getById()
+
+    public function getById()
     {
-        $stm = $this->conn->prepare("select id_vacinas,tipo,dose,data from relatorio_funcionario r LEFT JOIN vacinas vac on r.fk_vacina = vac.id_vacinas where r.fk_funcionario = :id");
-        $stm->bindParam("id", $this->id);
-        $stm->execute();
-        return $stm->fetchAll(PDO::FETCH_OBJ);;
+        try {
+            $stm = $this->conn->prepare("select id_vacinas,tipo,dose,data from relatorio_funcionario r LEFT JOIN vacinas vac on r.fk_vacina = vac.id_vacinas where r.fk_funcionario = :id");
+            $stm->bindParam("id", $this->id);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
     }
-    private function insert()
+
+    public function insert()
     {
-        $stm = $this->conn->prepare("Insert into vacinas values(DEFAULT,:fk,:tipo,:dose,now();");
-        $stm->bindParam("fk", $this->fk);
-        $stm->bindParam("tipo", $this->tipo);
-        $stm->bindParam("dose", $this->dose);
-        return $stm->execute();
+        try {
+            $stm = $this->conn->prepare("Insert into vacinas values(DEFAULT,:fk,:tipo,:dose,now();");
+            $stm->bindParam("fk", $this->fk);
+            $stm->bindParam("tipo", $this->tipo);
+            $stm->bindParam("dose", $this->dose);
+            return $stm->execute();
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
     }
-    private function update($column, $data)
+    
+    public function update($column, $data)
     {
-        $stm = $this->conn->prepare("Update vacinas set :column = (:data) where id_vacinas = (:id)");
-        $stm->bindParam("column", $column);
-        $stm->bindParam("data", $data);
-        $stm->bindParam("id", $this->id);
-        return $stm->execute();
+        try {
+            $stm = $this->conn->prepare("Update vacinas set :column = (:data) where id_vacinas = (:id)");
+            $stm->bindParam("column", $column);
+            $stm->bindParam("data", $data);
+            $stm->bindParam("id", $this->id);
+            return $stm->execute();
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
     }
-    private function delete()
+
+    public function search($column, $data)
+    {
+        try {
+            $stm = $this->conn->prepare("select * from vacinas where :column = :data");
+            $stm->bindParam("column", $column);
+            $stm->bindParam("data", $data);
+            $stm->execute();
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo ("Error type:\n" . $e);
+        }
+    }
+
+    public function delete()
     {
     }
 }
