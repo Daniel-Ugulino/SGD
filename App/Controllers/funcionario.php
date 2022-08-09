@@ -52,6 +52,7 @@ class funcionario_controler
 
 class atestado_controller
 {
+
 }
 
 class vacinas_controller

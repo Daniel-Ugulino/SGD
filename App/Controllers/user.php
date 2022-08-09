@@ -1,6 +1,6 @@
 <?php
 
-class Controler {
+class User {
 
     function generate_report(){
 
