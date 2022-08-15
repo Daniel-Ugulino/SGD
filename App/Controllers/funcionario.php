@@ -1,13 +1,13 @@
 <?php
-// require "../models/funcionario.php";
-// require "../models/vacinas.php";
-// require "../models/exame.php";
-// require "../models/atestados.php";
+
+require_once dirname(__FILE__) . "\..\Models\Funcionario.php";
+require_once dirname(__FILE__) . "\..\Models\Vacinas.php";
+require_once dirname(__FILE__) . "\..\Models\Exame.php";
+require_once dirname(__FILE__) . "\..\Models\Atestados.php";
 
 class report_controller
 {
 }
-
 
 class funcionario_controler
 {
@@ -17,42 +17,38 @@ class funcionario_controler
     private $funcionario;
     private $id;
 
-    private function __construct()
+    public function __construct()
     {
-        $this->atestado = new atestado();
-        // $this->exame = new exame();
-        // $this->vacinas = new vacinas();
+        $this->funcionario = new funcionario();
+        $this->funcionario->getAll();
     }
 
-    public function getReport($id)
-    {
-        $this->atestado->id = $id;
-        return $this->atestado->getById();
-    }
-
-
-    public function cad_vacinas()
-    {
-        # code...
+    public function index(){
+        $this->funcionario->getAll();
+        require_once dirname(__FILE__) ."\..\Views\Funcionario\index.php";
     }
 
     public function cad_funcionario()
     {
-        $data = $_POST;
-        $data1 = json_encode($data);
-
-        $this->atestado->fk = "x";
-        $this->atestado->cid = "x";
-        $this->atestado->data = "x";
-        $this->atestado->qtd_dias = "x";
-        $this->atestado->insert();
+        if ($_POST != null) {
+            $data = json_decode(json_encode($_POST));
+            echo(json_encode($data));
+            $this->funcionario->nome = $data->nome;
+            $this->funcionario->matricula = $data->matricula;
+            $this->funcionario->cpf = $data->cpf;
+            $this->funcionario->telefone = $data->telefone;
+            $this->funcionario->email = $data->email;
+            $this->funcionario->setor = $data->setor;
+            $this->funcionario->fator_rh = $data->fator_rh;
+            $this->funcionario->insert();
+        }
+        require_once dirname(__FILE__) . "\..\Views\Funcionario\cadastro.php";
     }
 }
 
 
 class atestado_controller
 {
-
 }
 
 class vacinas_controller
@@ -63,8 +59,3 @@ class vacinas_controller
 class exame_controller
 {
 }
-
-
-// $sla = new funcionario_controler();
-// $data = $sla->getReport(2);
-// echo (json_encode($data[0]));
