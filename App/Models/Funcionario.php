@@ -1,20 +1,21 @@
 <?php
 
-require_once "../../Core/Conexao.php";
+require_once dirname(__FILE__)."\..\..\Core\Conexao.php";
 
 class funcionario
 {
     private $conexao;
     private $conn;
 
-    public $id_funcionario;
-    public $nome;
-    public $matricula;
-    public $cpf;
-    public $telefone;
-    public $email;
-    public $setor;
-    public $fator_rh;
+    public int $id_funcionario;
+    public string $nome;
+    public int $matricula;
+    public int $cpf;
+    public string $telefone;
+    public string $email;
+    public string $setor;
+    public string $nascimento;
+    public string $fator_rh;
 
     public function __construct()
     {
@@ -48,13 +49,14 @@ class funcionario
     public function insert()
     {
         try {
-            $stm = $this->conn->prepare("Insert into funcionario values(DEFAULT,:name,:matricula,:cpf,:telefone,:email,:setor,now(),:fator_rh,true,now());");
+            $stm = $this->conn->prepare("Insert into funcionario values(DEFAULT,:name,:matricula,:cpf,:telefone,:email,:setor,:nascimento,:fator_rh,true,now());");
             $stm->bindParam("name", $this->nome);
             $stm->bindParam("matricula", $this->matricula);
             $stm->bindParam("cpf", $this->cpf);
             $stm->bindParam("telefone", $this->telefone);
             $stm->bindParam("email", $this->email);
             $stm->bindParam("setor", $this->setor);
+            $stm->bindParam("nascimento", $this->nascimento);
             $stm->bindParam("fator_rh", $this->fator_rh);
             return $stm->execute();
         } catch (Exception $e) {

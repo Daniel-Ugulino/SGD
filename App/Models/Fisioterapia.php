@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../Core/Conexao.php";
+require_once dirname(__FILE__)."\..\..\Core\Conexao.php";
 
 class fisioterapia
 {
