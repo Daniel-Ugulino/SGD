@@ -13,21 +13,22 @@
     <div>
         <form action="" id="cad_user" method="POST">
             <input type="text" name="nome" id="username" placeholder="nome" />
-            <input type="text" name="matricula" id="matricula" placeholder="matricula" />
+            <input type="number" name="matricula" id="matricula" placeholder="matricula" />
             <input type="text" name="cpf" id="cpf" placeholder="cpf" />
             <input type="text" name="telefone" id="telefone" placeholder="telefone" />
             <input type="text" name="email" id="email" placeholder="email" />
+            <input type="date" name="nascimento" id="nascimento" placeholder="nascimento" />
             <input type="text" name="setor" id="setor" placeholder="setor" />
             <input type="text" name="fator_rh" id="fator_rh" placeholder="fator_rh" />
             <button type="submit" id="a">ENVIAR</button>
         </form>
     </div>
 </body>
-
+<!-- 
 <script>
     document.getElementById("cad_user").addEventListener("submit", function(event) {
         event.preventDefault()
     });
-</script>
+</script> -->
 
 </html>
