@@ -20,7 +20,7 @@ class Router
     public function get_url()
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $url = strstr($uri, "Core");
+        $url = strstr($uri, "public");
         $url2 = strpbrk($url, "/");
         
         switch ($url2) {
