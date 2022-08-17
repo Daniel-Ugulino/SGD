@@ -1,0 +1,25 @@
+table{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+table {
+    display: flex;
+    justify-content: center;
+}
+tr{
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: center;
+}
+svg{
+    fill: aqua;
+}
