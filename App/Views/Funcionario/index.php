@@ -1,37 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="Public\reset.css" />
-    <link rel="stylesheet" href="index.css" /> -->
+    <link rel="stylesheet" href="assets/globals/reset.css" type="text/css" />
+    <link rel="stylesheet" href="assets/pages/Funcionario/css/style.css" type="text/css" />
     <title>Funcionarios</title>
 </head>
-
-<style>
-    div{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-    table {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
-    tr{
-        display: flex;
-        align-content: space-between;
-    }
-</style>
 
 <body>
     <main>
         <div>
-            <a href="/projeto%20med/Core/funcionario/cadastro">cadastrar</a>
+            <a href="/projeto%20med/funcionarios/cadastro">cadastrar</a>
             <table>
                 <thead>
                     <tr>
@@ -42,11 +24,11 @@
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($funcionario as $funcionario) { ?>
+                    foreach ($funcionarios as $funcionarios) { ?>
                         <tr>
-                            <td><?php if (isset($funcionario->id_funcionario)) echo $funcionario->id_funcionario; ?></td>
-                            <td><?php if (isset($funcionario->cpf)) echo $funcionario->cpf; ?></td>
-                            <td><?php if (isset($funcionario->matricula)) echo $funcionario->matricula; ?></td>
+                            <td><?php if (isset($funcionarios->id_funcionario)) echo $funcionarios->id_funcionario; ?></td>
+                            <td><?php if (isset($funcionarios->cpf)) echo $funcionarios->cpf; ?></td>
+                            <td><?php if (isset($funcionarios->matricula)) echo $funcionarios->matricula; ?></td>
                         </tr>
                     <?php
                     }
@@ -56,3 +38,5 @@
         </div>
     </main>
 </body>
+
+</html>
