@@ -15,17 +15,17 @@ class funcionario_controler
     private $atestado;
     private $exame;
     private $vacinas;
-    private $funcionario;
+    private $funcionario_model;
     private $id;
 
     public function __construct()
     {
-        $this->funcionario = new funcionario();
+        $this->funcionario_model = new funcionario();
     }
 
     public function index(){
-        $funcionario = $this->funcionario->getAll();
-        if (isset($funcionario)){
+        $funcionarios = $this->funcionario_model->getAll();
+        if (isset($funcionarios)){
             require_once dirname(__FILE__) ."\..\Views\Funcionario\index.php";
         }
         else{
@@ -37,21 +37,22 @@ class funcionario_controler
     {
         if ($_POST != null) {
             $data = json_decode(json_encode($_POST));
-            echo (json_encode($data));
-            $this->funcionario->nome = $data->nome;
-            $this->funcionario->matricula = $data->matricula;
-            $this->funcionario->cpf = $data->cpf;
-            $this->funcionario->telefone = $data->telefone;
-            $this->funcionario->email = $data->email;
-            $this->funcionario->nascimento = $data->nascimento;
-            $this->funcionario->setor = $data->setor;
-            $this->funcionario->fator_rh = $data->fator_rh;
+            $this->funcionario_model->nome = $data->nome;
+            $this->funcionario_model->matricula = $data->matricula;
+            $this->funcionario_model->cpf = $data->cpf;
+            $this->funcionario_model->telefone = $data->telefone;
+            $this->funcionario_model->email = $data->email;
+            $this->funcionario_model->nascimento = $data->nascimento;
+            $this->funcionario_model->setor = $data->setor;
+            $this->funcionario_model->fator_rh = $data->fator_rh;
+
             if ($this->error != "") {
-                $this->funcionario->insert();
+                $this->funcionario_model->insert();
             } else {
-                $this->error = $this->funcionario->insert();
+                $this->error = $this->funcionario_model->insert();
                 require_once dirname(__FILE__) . "\..\Views\Error\index.php";
             }
+            
         }
         require_once dirname(__FILE__) . "\..\Views\Funcionario\cadastro.php";
     }
