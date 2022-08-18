@@ -5,18 +5,10 @@ require_once dirname(__FILE__) . "\..\Models\Vacinas.php";
 require_once dirname(__FILE__) . "\..\Models\Exame.php";
 require_once dirname(__FILE__) . "\..\Models\Atestados.php";
 
-class report_controller
-{
-}
-
 class funcionario_controler
 {
     private $error;
-    private $atestado;
-    private $exame;
-    private $vacinas;
     private $funcionario_model;
-    private $id;
 
     public function __construct()
     {
@@ -52,22 +44,8 @@ class funcionario_controler
                 $this->error = $this->funcionario_model->insert();
                 require_once dirname(__FILE__) . "\..\Views\Error\index.php";
             }
-            
+
         }
         require_once dirname(__FILE__) . "\..\Views\Funcionario\cadastro.php";
     }
-}
-
-
-class atestado_controller
-{
-}
-
-class vacinas_controller
-{
-}
-
-
-class exame_controller
-{
 }
