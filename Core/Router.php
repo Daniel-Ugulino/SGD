@@ -8,8 +8,6 @@ require_once "../App/Controllers/user.php";
 class Router
 {
     private $funcionario_controller;
-    private $c_relatorio;
-    private $c_log;
     private $user_controller;
 
     public function __construct()
@@ -21,14 +19,16 @@ class Router
     public function get_url()
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $url = strstr($uri, "med");
+        $url = strstr($uri, "SGM");
         $url2 = strpbrk($url, "/");
         switch ($url2) {
             case "/teste":
                 echo ("a");
                 break;
-            case "/funcionarios/cadastro":
+            case "/funcionarios/form":
+                $this->funcionario_controller->get_funcionario();
                 $this->funcionario_controller->cad_funcionario();
+                $this->funcionario_controller->update_funcionario();
                 break;
             case "/funcionarios":
                 $this->funcionario_controller->index();
