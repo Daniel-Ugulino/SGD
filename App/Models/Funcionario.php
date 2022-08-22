@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__)."\..\..\Core\Conexao.php";
+require_once dirname(__FILE__) . "\..\..\Core\Conexao.php";
 
 class funcionario
 {
@@ -33,14 +33,14 @@ class funcionario
             echo ("Error type:\n" . $e);
         }
     }
-    
+
     public function getById()
     {
         try {
             $stm = $this->conn->prepare("select * from funcionario where id_funcionario = :id and ativo = true");
-            $stm->bindParam("id", $this->id);
+            $stm->bindParam("id", $this->id_funcionario);
             $stm->execute();
-            return $stm->fetchAll(PDO::FETCH_OBJ);
+            return $stm->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             echo ("Error type:\n" . $e);
         }
@@ -48,20 +48,17 @@ class funcionario
 
     public function insert()
     {
-        try {
-            $stm = $this->conn->prepare("Insert into funcionario values(DEFAULT,:name,:matricula,:cpf,:telefone,:email,:setor,:nascimento,:fator_rh,true,now());");
-            $stm->bindParam("name", $this->nome);
-            $stm->bindParam("matricula", $this->matricula);
-            $stm->bindParam("cpf", $this->cpf);
-            $stm->bindParam("telefone", $this->telefone);
-            $stm->bindParam("email", $this->email);
-            $stm->bindParam("setor", $this->setor);
-            $stm->bindParam("nascimento", $this->nascimento);
-            $stm->bindParam("fator_rh", $this->fator_rh);
-            return $stm->execute();
-        } catch (Exception $e) {
-            echo ("Error type:\n" . $e);
-        }
+
+        $stm = $this->conn->prepare("Insert into funcionario values(DEFAULT,:name,:matricula,:cpf,:telefone,:email,:setor,:nascimento,:fator_rh,true,now());");
+        $stm->bindParam("name", $this->nome);
+        $stm->bindParam("matricula", $this->matricula);
+        $stm->bindParam("cpf", $this->cpf);
+        $stm->bindParam("telefone", $this->telefone);
+        $stm->bindParam("email", $this->email);
+        $stm->bindParam("setor", $this->setor);
+        $stm->bindParam("nascimento", $this->nascimento);
+        $stm->bindParam("fator_rh", $this->fator_rh);
+        return $stm->execute();
     }
 
     public function update($column, $data)
