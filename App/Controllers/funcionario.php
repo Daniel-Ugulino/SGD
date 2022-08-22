@@ -61,6 +61,7 @@ class funcionario_controler
 
     public function update_funcionario()
     {
+        //teste para realizar um forech pegando os dados dos names recebidos 
         if (isset($_GET['id'])) {
             if ($_POST != null) {
                 echo ("update");
