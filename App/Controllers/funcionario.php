@@ -30,6 +30,7 @@ class funcionario_controler
         if (isset($_GET['id']) == false) {
             if ($_POST != null) {
                 $data = json_decode(json_encode($_POST));
+                
                 $this->funcionario_model->nome = $data->nome;
                 $this->funcionario_model->matricula = $data->matricula;
                 $this->funcionario_model->cpf = $data->cpf;
@@ -38,6 +39,11 @@ class funcionario_controler
                 $this->funcionario_model->nascimento = $data->nascimento;
                 $this->funcionario_model->setor = $data->setor;
                 $this->funcionario_model->fator_rh = $data->fator_rh;
+
+                // $keys = array_keys((array)$data);
+                // foreach ($keys as $key) {
+                //     $this->funcionario_model->$key = $data->$key;
+                // }
 
                 try {
                     $this->funcionario_model->insert();
@@ -53,7 +59,7 @@ class funcionario_controler
     public function get_funcionario()
     {
         if (isset($_GET['id'])) {
-            $this->funcionario_model->id_funcionario = $_GET['id'];
+            $this->funcionario_model->id = $_GET['id'];
             $data = $this->funcionario_model->getById();
         }
         require dirname(__FILE__) . "/../Views/Funcionario/form.php";
@@ -62,23 +68,16 @@ class funcionario_controler
     public function update_funcionario()
     {
         //teste para realizar um forech pegando os dados dos names recebidos 
+
         if (isset($_GET['id'])) {
             if ($_POST != null) {
-                echo ("update");
-                // $data = new stdClass();
                 $data = json_decode(json_encode($_POST));
-                
-                var_dump(($data));
-                 // echo (json_decode(get_class_vars($data)));
+                $keys = array_keys((array)$data);
 
-                // foreach ($data as $data) {
-                // }
-
-                /*$class_vars = get_class_vars($data);
-                echo(var_dump($class_vars));
-                foreach ($class_vars as $name => $value) {
-                    echo "$name : $value\n";
-                }*/
+                foreach ($keys as $key) {
+                    $this->funcionario_model->update($key, $data->$key);
+                    echo ("\n");
+                }
             }
             // $data = $this->funcionario_model->update();
         }
