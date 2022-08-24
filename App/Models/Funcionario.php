@@ -7,7 +7,7 @@ class funcionario
     private $conexao;
     private $conn;
 
-    public int $id_funcionario;
+    public int $id;
     public string $nome;
     public int $matricula;
     public int $cpf;
@@ -38,7 +38,7 @@ class funcionario
     {
         try {
             $stm = $this->conn->prepare("select * from funcionario where id_funcionario = :id and ativo = true");
-            $stm->bindParam("id", $this->id_funcionario);
+            $stm->bindParam("id", $this->id);
             $stm->execute();
             return $stm->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
@@ -48,7 +48,6 @@ class funcionario
 
     public function insert()
     {
-
         $stm = $this->conn->prepare("Insert into funcionario values(DEFAULT,:name,:matricula,:cpf,:telefone,:email,:setor,:nascimento,:fator_rh,true,now());");
         $stm->bindParam("name", $this->nome);
         $stm->bindParam("matricula", $this->matricula);
@@ -64,10 +63,10 @@ class funcionario
     public function update($column, $data)
     {
         try {
-            $stm = $this->conn->prepare("Update funcionario set :column = (:data) where id_funcionario = (:id)");
-            $stm->bindParam("column", $column);
-            $stm->bindParam("data", $data);
-            $stm->bindParam("id", $this->id);
+            $stm = $this->conn->prepare("Update funcionario set $column = ('$data') where id_funcionario =  $this->id");
+            // $stm->bindParam("column", $column);
+            // $stm->bindParam("data", $data);
+            // $stm->bindParam("id", $this->id);
             return $stm->execute();
         } catch (Exception $e) {
             echo ("Error type:\n" . $e);
