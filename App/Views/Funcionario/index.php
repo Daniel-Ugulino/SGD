@@ -51,24 +51,19 @@
 </body>
 
 </html>
+<script src="../Assets/javascript/jquery-3.5.1.min.js"></script>
 
 
 
 <script>
     $("#search").keyup(function() {
+        console.log("a")
         $.ajax({
             type: "POST",
             url: "",
             data: {
-                op: "card_control",
-                Inidate: $("#start_date").val(),
-                Fimdate: $("#end_date").val(),
-                name: $("#name_filter").val()
-            },
-            datatype: "html",
-            success: function(data) {
-                $("#card_control").html(data);
-                getdata();
+                column: $("#column").val(),
+                field: $("#search").val()
             }
         });
         <?php $this->search()?>
