@@ -16,12 +16,21 @@
     <main>
         <div>
             <a href="/SGM/funcionarios/form">cadastrar</a>
+            <div>
+                <select name="column" id="column">
+                    <option value="nome">nome</option>
+                    <option value="cpf">cpf</option>
+                    <option value="matricula">matricula</option>
+                </select>
+                <input type="text" name="field" id="search" placeholder="digite o texto">
+            </div>
+
             <table>
                 <thead>
                     <tr>
-                        <th>id</th>
                         <th>Nome</th>
                         <th>CPF</th>
+                        <th>Matricula</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,3 +51,26 @@
 </body>
 
 </html>
+
+
+
+<script>
+    $("#search").keyup(function() {
+        $.ajax({
+            type: "POST",
+            url: "",
+            data: {
+                op: "card_control",
+                Inidate: $("#start_date").val(),
+                Fimdate: $("#end_date").val(),
+                name: $("#name_filter").val()
+            },
+            datatype: "html",
+            success: function(data) {
+                $("#card_control").html(data);
+                getdata();
+            }
+        });
+        <?php $this->search()?>
+    })
+</script>
