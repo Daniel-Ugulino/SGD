@@ -15,6 +15,15 @@ class funcionario_controler
         $this->funcionario_model = new funcionario();
     }
 
+
+    private function injection_analyze($string)
+    {
+        $string = htmlspecialchars($string);
+        $string = preg_replace('/[\!@#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', "", $string);
+        $string = str_replace(["UPDATE", "DELETE", "DROP", "SELECT", "INSERT", "ALTER", "TABLE", "VIEW", "PROCEDURE", "CREATE", "DATABASE", "LIKE", "USE"], "", $column);
+        return $string;
+    }
+
     public function index()
     {
         $funcionarios = $this->funcionario_model->getAll();
@@ -30,7 +39,7 @@ class funcionario_controler
         if (isset($_GET['id']) == false) {
             if ($_POST != null) {
                 $data = json_decode(json_encode($_POST));
-                
+
                 $this->funcionario_model->nome = $data->nome;
                 $this->funcionario_model->matricula = $data->matricula;
                 $this->funcionario_model->cpf = $data->cpf;
@@ -40,9 +49,9 @@ class funcionario_controler
                 $this->funcionario_model->setor = $data->setor;
                 $this->funcionario_model->fator_rh = $data->fator_rh;
 
-                // $keys = array_keys((array)$data);
-                // foreach ($keys as $key) {
-                //     $this->funcionario_model->$key = $data->$key;
+                // $columns = array_columns((array)$data);
+                // foreach ($columns as $column) {
+                //     $this->funcionario_model->$column = $data->$column;
                 // }
 
                 try {
@@ -67,19 +76,27 @@ class funcionario_controler
 
     public function update_funcionario()
     {
-        //teste para realizar um forech pegando os dados dos names recebidos 
-
         if (isset($_GET['id'])) {
             if ($_POST != null) {
                 $data = json_decode(json_encode($_POST));
-                $keys = array_keys((array)$data);
-
-                foreach ($keys as $key) {
-                    $this->funcionario_model->update($key, $data->$key);
-                    echo ("\n");
+                $columns = array_keys((array)$data);
+                foreach ($columns as $column) {
+                    $column = $this->injection_analyze($column);
+                    $this->funcionario_model->update($column, $data->$column);
                 }
             }
-            // $data = $this->funcionario_model->update();
+        }
+    }
+
+    public function search_funcionario()
+    {
+        $data = json_decode((json_encode($_POST)));
+        $column = $this->injection_analyze($data->column);
+        $funcionarios = $this->funcionario_model->search($column, $data->field);
+        if (isset($funcionarios)) {
+            require_once dirname(__FILE__) . "/../Views/Funcionario/index.php";
+        } else {
+            require_once dirname(__FILE__) . "/../Views/Error/index.php";
         }
     }
 }
