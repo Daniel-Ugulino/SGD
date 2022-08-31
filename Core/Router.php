@@ -32,6 +32,7 @@ class Router
                 break;
             case "/funcionarios":
                 $this->funcionario_controller->index();
+                $this->funcionario_controller->search_funcionario();
                 break;
             case "/login":
                 $this->user_controller->create_user();
