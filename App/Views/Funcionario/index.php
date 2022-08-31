@@ -23,6 +23,7 @@
                     <option value="matricula">matricula</option>
                 </select>
                 <input type="text" name="field" id="search" placeholder="digite o texto">
+                <input type="button" value="a" id="serch_bt" placeholder="clica">
             </div>
 
             <table>
@@ -35,7 +36,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($funcionarios as $funcionarios) { ?>
+                    foreach ($this->funcionarios as $funcionarios) { ?>
                         <tr id=<?php if (isset($funcionarios->id_funcionario)) echo $funcionarios->id_funcionario; ?>>
                             <td><?php if (isset($funcionarios->nome)) echo $funcionarios->nome; ?></td>
                             <td><?php if (isset($funcionarios->cpf)) echo $funcionarios->cpf; ?></td>
@@ -51,21 +52,29 @@
 </body>
 
 </html>
-<script src="../Assets/javascript/jquery-3.5.1.min.js"></script>
-
-
 
 <script>
     $("#search").keyup(function() {
-        console.log("a")
         $.ajax({
             type: "POST",
             url: "",
             data: {
+                search: true,
                 column: $("#column").val(),
                 field: $("#search").val()
+            },
+            success: function(data) {
+                $('tbody').empty();
+                const content = JSON.parse(data)
+                content.map(addItens);
+                function addItens(item) {
+                    $('tbody').append("<tr id=" + item.id_funcionario + "> <td>" + item.nome + "</td> <td>" + item.cpf + "</td> <td>" + item.matricula + "</td></tr>")
+                    //    $('tbody').append("<td>" + item.nome + "</td>")
+                    //    $('tbody').append("<td>" + item.cpf + "</td>")
+                    //    $('tbody').append("<td>" + item.matricula + "</td></tr>")
+
+                }
             }
         });
-        <?php $this->search()?>
     })
 </script>
