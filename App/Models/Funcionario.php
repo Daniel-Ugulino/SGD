@@ -75,8 +75,8 @@ class funcionario
     public function search($column, $data)
     {
         try {
-            $stm = $this->conn->prepare("select * from funcionario where $column = :data");
-            $stm->bindParam("data", $data);
+            $stm = $this->conn->prepare("select * from funcionario where LOWER($column) like LOWER('%$data%')");
+            $stm->execute();
             return $stm->fetchAll(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             echo ("Error type:\n" . $e);
